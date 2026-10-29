@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora Simples</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora</h1>
+    <div class="inputs">
+      <label for="num1">Número 1</label>
+      <input type="number" id="num1" placeholder="Ex.: 10" />
+      <label for="num2">Número 2</label>
+      <input type="number" id="num2" placeholder="Ex.: 5" />
+    </div>
+
+    <div class="buttons">
+      <button id="btnSomar">Somar</button>
+      <button id="btnSubtrair">Diminuir</button>
+      <button id="btnMultiplicar">Multiplicar</button>
+      <button id="btnDividir">Dividir</button>
+    </div>
+
+    <div class="resultado">
+      <h2>Resultado: <span id="resultado">--</span></h2>
+    </div>
+  </div>
+
+  <script src="calculadora.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
+2.2 styles.css
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, "Noto Sans", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 440px;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+h1 {
+  margin: 0 0 16px 0;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d7dce3;
+  border-radius: 10px;
+  outline: none;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+button {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background: #1f6feb;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.05s ease, background 0.15s ease;
+}
+
+button:hover { background: #1557c0; }
+button:active { transform: translateY(1px); }
+
+.resultado {
+  background: #f2f6ff;
+  border: 1px solid #d7e3ff;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.resultado h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #0f172a;
+}
+
+2.3 calculadora.js
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) {
+    module.exports = factory();
+  } else {
+    root.Calculadora = factory();
+  }
+}(typeof self !== 'undefined' ? self : this, function () {
+  'use strict';
+
+  function toNumber(n) {
+    const x = Number(n);
+    if (Number.isNaN(x)) throw new Error('Entrada inválida: não é um número');
+    return x;
+  }
+
+  function somar(a, b) {
+    return toNumber(a) + toNumber(b);
+  }
+
+  function subtrair(a, b) {
+    return toNumber(a) - toNumber(b);
+  }
+
+  function multiplicar(a, b) {
+    return toNumber(a) * toNumber(b);
+  }
+
+  function dividir(a, b) {
+    const x = toNumber(a);
+    const y = toNumber(b);
+    if (y === 0) throw new Error('Divisão por zero');
+    return x / y;
+  }
+
+  return { somar, subtrair, multiplicar, dividir };
+}));
